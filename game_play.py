@@ -31,7 +31,7 @@ difficulty_dictionaries = {
 
 ALPHABET = string.ascii_uppercase #String of uppercase letters to use at the top of the player board.
 ''' Empty lists to be filled with: 
-    co-ordinates on the hidden board that have been revealed during game play; 
+    co-ordinates on the hidden-board that have been revealed during game play; 
     co-ordinates that the player has flagged as mines; co-ordinates of mines'''
 checked_h_co_ords = []
 flagged_co_ords = []
@@ -40,7 +40,7 @@ play = True
 
 def set_difficulty():
     """Asks the user to select the difficultly level they would like to play and returns the dictionary of the corresponding difficulty. 
-    This dictionary is used to set the player board and hidden board"""
+    This dictionary is used to set the player-board and hidden-board"""
     print ("Please select difficulty level by entering either 1, 2 or 3 based on the corresponding difficulty")
     #for loop to cycle through dictionaries 
     print(f"""1. {difficulty_dictionaries[1]['difficulty']}: {difficulty_dictionaries[1]['x_axis']}x{difficulty_dictionaries[1]['y_axis']} grid, {difficulty_dictionaries[1]['mine_no']} mines
@@ -58,7 +58,7 @@ def set_difficulty():
     return difficulty_dictionaries[diff_input]
 
 def set_mines_array():
-    """Creates a list of unique co-ordinates for the mines to be placed on the hidden board. 
+    """Creates a list of unique co-ordinates for the mines to be placed on the hidden-board. 
     Number of mines and x & y ranges are based on the selected difficulty dictionary"""
     while len(mines_lst) < diff_dict["mine_no"]:
         mines_lst.append([random.randint(0, diff_dict["x_axis"] - 1), random.randint(0, diff_dict["y_axis"] - 1)])
@@ -67,7 +67,7 @@ def set_mines_array():
     return mines_lst 
 
 def set_h_xr(x_co_ord):
-    """Creates the range along the x-axis, of the hidden board, that other definitions will use to iterate through. 
+    """Creates the range along the x-axis, of the hidden-board, that other definitions will use to iterate through. 
     The range is dependent on the placement of the co-ordinate along the x-axis"""
     if x_co_ord == 0:
         xr = iter(range(x_co_ord, x_co_ord + 2)) #If the co-ord is against the left edge the then x-axis range is x co-ordinate -> co-ordinate + 1  
@@ -78,7 +78,7 @@ def set_h_xr(x_co_ord):
     return xr
 
 def set_h_yr(y_co_ord):
-    """Creates the range along the y-axis, of the hidden board, that other definitions will use to iterate through. 
+    """Creates the range along the y-axis, of the hidden-board, that other definitions will use to iterate through. 
     The range is dependent on the placement of the co-ordinate along the y-axis"""
     if y_co_ord == 0:
         yr = iter(range(y_co_ord, y_co_ord + 2)) #If the co-ord is against the top edge the then y-axis range is y co-ordinate -> co-ordinate + 1 
@@ -96,7 +96,7 @@ def set_p_axis_ranges(h_co_ord, p_co_ord):
     return (p_x, p_y)
 
 def set_hidden_board():
-    """Creates the hidden board that contains the locations of the mines, as well as the values that sit around the mines, to 
+    """Creates the hidden-board that contains the locations of the mines, as well as the values that sit around the mines, to 
     indicate if a mine is near"""
     hidden_board = init_h_board() #Creates a hidden board filled with 0s based on the x & y ranges from the difficulty dictionary
     hidden_board = set_h_board_mines(hidden_board) #Places the mines at the co-ordinates specified in `mines_lst`
@@ -104,7 +104,7 @@ def set_hidden_board():
     return hidden_board
 
 def init_h_board():
-    """Creates a hidden board filled with 0s based on the x & y ranges from the selected difficulty dictionary
+    """Creates a hidden-board filled with 0s based on the x & y ranges from the selected difficulty dictionary
     ie 
     0000000
     0000000
@@ -141,13 +141,13 @@ def set_h_board_values(hidden_board):
     return hidden_board
 
 def set_user_board():
-    """Sets the `grid` list, which contains all the information to print the player board. It is initially an empty board that prints as below
+    """Sets the `grid` list, which contains all the information to print the player-board. It is initially an empty board that prints as below
     + - + - + - + - + 
     |   |   |   |   | 
     + - + - + - + - + 
     |   |   |   |   |   
     + - + - + - + - + 
-    As squares get clicked on by the player, the `grid` list is updated with the corresponding hidden board values, which prints as below
+    As squares get clicked on by the player, the `grid` list is updated with the corresponding hidden-board values, which prints as below
     + - + - + - + - + 
     | 2 |   | 2 | 1 | 
     + - + - + - + - + 
@@ -167,8 +167,8 @@ def set_user_board():
     return(grid)
 
 def print_grid():
-    """Prints the player board to the terminal. This is called at the beginning of play, and then after each time the player enters a square 
-    selection. The player board will update, with the values of the hidden board, after each selection. The revealed different numbers 
+    """Prints the player-board to the terminal. This is called at the beginning of play, and then after each time the player enters a square 
+    selection. The player-board will update, with the values of the hidden-board, after each selection. The revealed different numbers 
     are printed in different colours to aid with player readability
     """
     for number, row in enumerate(grid, 0): #Shifts through rows instead of items
@@ -227,9 +227,9 @@ def click_square():
     return 
 
 def board_callup(square_x, square_y):
-    """Each time the user clicks a new square, a list is created containing the co-ordinates of the square on the player board as well as the 
-    corresponding co-ordinates of the hidden board. A counter is initialised that reflects how many co-ordinates are in the queue to be checked.
-    For squares that contian a 0, on the hidden grid, all the squares around them need to be revealed therefore the co-ordinates of those sqaures
+    """Each time the user clicks a new square, a list is created containing the co-ordinates of the square on the player-board as well as the 
+    corresponding co-ordinates of the hidden-board. A counter is initialised that reflects how many co-ordinates are in the queue to be checked.
+    For squares that contian a 0, on the hidden-board, all the squares around them need to be revealed therefore the co-ordinates of those sqaures
     will be added to the list and the counter will be incremented"""
     co_ord_no = 1 #A counter. Each time a new square is selected by the user this should reset to 1
     hidden_x = ALPHABET.index(square_x) #The index postion of the letter part of the co-ordinate, within ALPHABET, matches the hidden grid x position
@@ -240,10 +240,10 @@ def board_callup(square_x, square_y):
 
 def test_square(square):
     """Function for handling game play. Both the hidden and player x & y co-ordinates are spliced out from the list generated in `boad_callup()` into
-    separate hidden and player co-ordinates lists. `h_co_ords` is used to determine what value on the hidden board corresponds to the selected 
-    sqaure. If this is a mine then the game is lost and the script is exited. If this is not a mine then the hidden board value is inserted into the 
-    `grid` list, in the corresponding player board square. If the hidden board value is a 0 then all the squares around that 
-    square are also checked. The hidden board co-ordinates are added to `checked_h_co_ords` to keep track of all checked squares."""
+    separate hidden and player co-ordinates lists. `h_co_ords` is used to determine what value on the hidden-board corresponds to the selected 
+    sqaure. If this is a mine then the game is lost and the script is exited. If this is not a mine then the hidden-board value is inserted into the 
+    `grid` list, in the corresponding player-board square. If the hidden-board value is a 0 then all the squares around that 
+    square are also checked. The hidden-board co-ordinates are added to `checked_h_co_ords` to keep track of all checked squares."""
     init_co_ords = board_callup(square[0],int(square[1:])) #Hidden co-ordinates, and corresponding player board co-ordinates, are found
     h_co_ord = init_co_ords[1:3]
     p_co_ord = init_co_ords[3:]
