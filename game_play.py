@@ -29,7 +29,7 @@ difficulty_dictionaries = {
     }
 }   
 
-ALPHABET = string.ascii_uppercase #String of uppercase letters to use at the top of the player board.
+   #String of uppercase letters to use at the top of the player board.
 ''' Empty lists to be filled with: 
     co-ordinates on the hidden-board that have been revealed during game play; 
     co-ordinates that the player has flagged as mines; co-ordinates of mines'''
@@ -43,9 +43,8 @@ def set_difficulty():
     This dictionary is used to set the player-board and hidden-board"""
     print ("Please select difficulty level by entering either 1, 2 or 3 based on the corresponding difficulty")
     #for loop to cycle through dictionaries 
-    print(f"""1. {difficulty_dictionaries[1]['difficulty']}: {difficulty_dictionaries[1]['x_axis']}x{difficulty_dictionaries[1]['y_axis']} grid, {difficulty_dictionaries[1]['mine_no']} mines
-2. Intermediate: ({difficulty_dictionaries[2]['mine_no']} mines)
-3. Expert: ({difficulty_dictionaries[3]['mine_no']} mines)""")
+    for x in range(1,len(difficulty_dictionaries)+1):
+        print(f"""{x}. {difficulty_dictionaries[x]['difficulty']}: {difficulty_dictionaries[x]['x_axis']}x{difficulty_dictionaries[x]['y_axis']} grid, {difficulty_dictionaries[x]['mine_no']} mines""")
     while True: #An infinite loop to ensure valid input - this will only end when the input meets the specified criteria
         try: 
             diff_input = int(input())
@@ -209,20 +208,18 @@ def click_square():
     while True: #A loop to ensure that the user enters a valid co-ordinate or flag + co_ordinate 
         flag = False 
         square = input().upper() #Full input is capitalised to account for if a mine is flagged or not
-        if len(square) in [4, 5]: #If the user wants to flag a mine then the input will be 4 characters long
-            flag = square[:2] #The 4 are split to keep `square` as 2 characters
+        if len(square) > 3: #If the user wants to flag a mine then the input will be 4 or 5 characters long
+            flag = square[:2] #The input is split to keep `square` as 2 characters
             square = square[2:]
-            if flag != "FL" or square[0] not in ALPHABET or not square[1:].isdigit(): #If the user enters anything other than fl while trying to flag a mine
-                print("If you would like to flag a square as a mine please type 'fl' before you enter your co-ordinates. Otherwise please enter grid co-ordinates in the format letter-number (eg b7) ")
-            else: break
-        if len(square) not in [2, 3] or square[0] not in ALPHABET or not square[1:].isdigit(): 
-            #if square doesn't contain exactly 2 charaters, if the first character doesn't match an element in ALPHABET, or the second character isn't a number
-            print("Please enter grid co-ordinates in the format letter-number (eg b7)") #then the user must re-enter their co-ordinate choice
-        else: break
+        if flag and flag != "FL" or len(square) not in [2, 3] or square[0] not in ALPHABET or not square[1:].isdigit(): #If the user enters anything other than fl while trying to flag a mine
+            if flag and flag != "FL":#if square doesn't contain exactly 2 charaters, if the first character doesn't match an element in ALPHABET, or the second character isn't a number
+                print("If you would like to flag a square as a mine please type 'fl' before you enter your co-ordinates.")
+            if len(square) not in [2, 3] or square[0] not in ALPHABET or not square[1:].isdigit():
+                print("Please enter grid co-ordinates in the format letter-number (eg b7).")
+        else: break 
     if flag: #If flag is truthy then the user must want to flag the square 
         flag_square(square) #If the user wants to flag the selected square then flag_sqare() is called and fed the co-ordinates
     else:
-        print(square)
         test_square(square) #If the user is not flagging a mine then test_square() is called and fed the co-ordinates
     return 
 
@@ -247,12 +244,11 @@ def test_square(square):
     init_co_ords = board_callup(square[0],int(square[1:])) #Hidden co-ordinates, and corresponding player board co-ordinates, are found
     h_co_ord = init_co_ords[1:3]
     p_co_ord = init_co_ords[3:]
-    print(h_co_ord, p_co_ord)
     
-    if hidden_board[h_co_ord[1]][h_co_ord[0]] == "x":
+    if hidden_board[h_co_ord[1]][h_co_ord[0]] == "x": #If the user has clicked on a square that contains a mine then the game is lost
         game_interaction(2)
         sys.exit()
-    elif hidden_board[h_co_ord[1]][h_co_ord[0]] == "$": #If the user has flagged a square that isn't a mine, the program should leave this flag in place
+    elif hidden_board[h_co_ord[1]][h_co_ord[0]] == "$": #If the user has flagged a square as a mine then the program should leave this flag in place
         pass
     else:
         grid[p_co_ord[1]] = (grid[p_co_ord[1]][:p_co_ord[0]] + str(hidden_board[h_co_ord[1]][h_co_ord[0]]) + grid[p_co_ord[1]][p_co_ord[0] + 1:])
