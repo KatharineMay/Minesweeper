@@ -29,7 +29,7 @@ difficulty_dictionaries = {
     }
 }   
 
-   #String of uppercase letters to use at the top of the player board.
+ALPHABET = string.ascii_uppercase #String of uppercase letters to use at the top of the player board.
 ''' Empty lists to be filled with: 
     co-ordinates on the hidden-board that have been revealed during game play; 
     co-ordinates that the player has flagged as mines; co-ordinates of mines'''
