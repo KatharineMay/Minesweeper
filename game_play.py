@@ -125,7 +125,8 @@ def set_h_board_mines(hidden_board):
 
 def set_h_board_values(hidden_board):
     """Increments counters in the squares around the mines to show how many mines are in the immediate squares around a given square
-    ie 
+    ie 1
+
     111112x
     2x21x21
     2x31210
@@ -137,6 +138,7 @@ def set_h_board_values(hidden_board):
                 if hidden_board[y][x] =="x": #If the square around the selected mine also contains a mine do not change that square
                     continue
                 hidden_board[y][x] += 1 #Add 1 to the counter within the sqaure 
+    print(hidden_board)
     return hidden_board
 
 def set_user_board():
@@ -314,6 +316,7 @@ def turn_3x3(grid_co_ords):
                         grid_co_ords.append(p_x) #the player-board x-co-ordinate appended
                         grid_co_ords.append(p_y) #the player-board y-co-ordinate appended
                         grid_co_ords[0] += 1 #the counter of co-ordinates to be checked is incremented by 1 
+                        print(grid_co_ords)
     return(grid_co_ords)
 
 def flag_square(square):
